@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-11-04T10:00:00Z" product-name="tw_places">
+        <header/>
+        <body>
+            <trans-unit id="tw_places">
+                <source>Places and map search</source>
+                <target>Orte und Kartensuche</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place">
+                <source>Place</source>
+                <target>Ort</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.name">
+                <source>Name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.latitude">
+                <source>Latitude</source>
+                <target>Längengrad</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.longitude">
+                <source>Longitude</source>
+                <target>Breitengrad</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
