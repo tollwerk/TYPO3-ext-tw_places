@@ -36,12 +36,49 @@
 namespace Tollwerk\TwPlaces\Domain\Repository;
 
 
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class PlaceRepository extends Repository
 {
     public function search(float $latitude = null, float $longitude = null, array $constraints = [])
     {
-        //
+        // Get high level query object for getting storage pids etc.
+        $query = $this->createQuery();
+
+        // Get low level query builder for building distance based database query
+        /** @var  \Doctrine\DBAL\Query\QueryBuilder $concreteQueryBuilder */
+        $concreteQueryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('tx_twplaces_domain_model_place')
+            ->createQueryBuilder()
+            ->getConcreteQueryBuilder();
+
+        // Build basic query
+        $concreteQueryBuilder->select(
+            'place.*',
+            '(round(
+                6371000 * acos(
+                    cos(radians(' . $latitude . '))
+                    * cos(radians(place.latitude))
+                    * cos(radians(place.longitude) - radians(' . $longitude . '))
+                    + sin(radians(' . $latitude . '))
+                    * sin(radians(place.latitude))
+                    )
+            )) AS distance')
+            ->from('tx_twplaces_domain_model_place', 'place')
+            ->groupBy('uid')
+            ->orderBy('distance', 'ASC');
+
+        // TODO: Implement constraints
+        // TODO: Respect storage pids
+        // TODO: Check domain
+        // TODO: Check enable fields
+        // TODO: Respoect exclude_countries, include_countries
+
+        $result = $concreteQueryBuilder->execute()->fetchAll();
+        return $result;
+
     }
 }

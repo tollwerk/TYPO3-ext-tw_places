@@ -35,6 +35,7 @@
 
 namespace Tollwerk\TwPlaces\Controller;
 
+use Tollwerk\TwPlaces\Domain\Repository\PlaceRepository;
 use Tollwerk\TwPlaces\Utility\SearchFormUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -50,12 +51,19 @@ class PlaceController extends ActionController
     protected $searchFormUtility = null;
 
     /**
+     * @var PlaceRepository
+     */
+    protected $placeRepository = null;
+
+    /**
      * PlaceController constructor.
      * @param SearchFormUtility $searchFormUtility
+     * @param PlaceRepository $placeRepository
      */
-    public function __construct(SearchFormUtility $searchFormUtility)
+    public function __construct(SearchFormUtility $searchFormUtility, PlaceRepository $placeRepository)
     {
         $this->searchFormUtility = $searchFormUtility;
+        $this->placeRepository = $placeRepository;
     }
 
     /**
@@ -92,7 +100,8 @@ class PlaceController extends ActionController
      */
     public function searchAction(float $latitude = null, float $longitude = null, array $constraints = []): void
     {
-        // TODO: Implement
+        $places = $this->placeRepository->search($latitude, $longitude, $constraints);
+        $this->view->assign('places', $places);
     }
 
     /**
