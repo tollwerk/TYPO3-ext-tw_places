@@ -24,6 +24,12 @@
             <trans-unit id="tx_twplaces_domain_model_place.name">
                 <source>Name</source>
             </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.given_name">
+                <source>Given name</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.family_name">
+                <source>Family name</source>
+            </trans-unit>
             <trans-unit id="tx_twplaces_domain_model_place.latitude">
                 <source>Latitude</source>
             </trans-unit>
@@ -42,10 +48,13 @@
             <trans-unit id="tx_twplaces_domain_model_place.country">
                 <source>Country</source>
             </trans-unit>
-            <trans-unit id="tx_twplaces_domain_model_place.address_level_1">
+            <trans-unit id="tx_twplaces_domain_model_place.region">
+                <source>Region</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.state">
                 <source>State</source>
             </trans-unit>
-            <trans-unit id="tx_twplaces_domain_model_place.address_level_2">
+            <trans-unit id="tx_twplaces_domain_model_place.city">
                 <source>City</source>
             </trans-unit>
             <trans-unit id="tx_twplaces_domain_model_place.street_address">
@@ -56,6 +65,9 @@
             </trans-unit>
             <trans-unit id="tx_twplaces_domain_model_place.phone">
                 <source>Phone</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.fax">
+                <source>Fax</source>
             </trans-unit>
             <trans-unit id="tx_twplaces_domain_model_place.url">
                 <source>Website</source>
