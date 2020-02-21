@@ -6,7 +6,7 @@
  * @package    Tollwerk\TwPlaces
  * @subpackage Tollwerk\TwPlaces\Domain\Repository
  * @author     Klaus Fiedler <klaus@tollwerk.de> / @jkphl
- * @copyright  Copyright © 2019 Klaus Fiedler <klaus@tollwerk.de>
+ * @copyright  Copyright © 2020 Klaus Fiedler <klaus@tollwerk.de>
  * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
  */
 
@@ -35,6 +35,7 @@
 
 namespace Tollwerk\TwPlaces\Controller;
 
+use Tollwerk\TwPlaces\Utility\SearchFormUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -43,35 +44,63 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class PlaceController extends ActionController
 {
+    /**
+     * @var SearchFormUtility
+     */
+    protected $searchFormUtility = null;
 
+    /**
+     * PlaceController constructor.
+     * @param SearchFormUtility $searchFormUtility
+     */
+    public function __construct(SearchFormUtility $searchFormUtility)
+    {
+        $this->searchFormUtility = $searchFormUtility;
+    }
 
     /**
      * List places
-     * @param array $places    Array with place uids
+     * @param array $places Array with place uids
      */
-    public function listAction(array $places = null): void
+    public function listAction(array $places = []): void
     {
+        // TODO: Implement
+    }
 
+    /**
+     * Processes the submitted search form values
+     * and passes everything on to searchAction
+     *
+     * @param array $search
+     */
+    public function searchFormAction(array $search = [])
+    {
+        $position = $this->searchFormUtility->getCoordinatesFromSearchForm($search);
+        $this->forward('search', 'Place', 'TwPlaces', [
+            'latitude' => $position ? $position->getLatitude() : null,
+            'longitude' => $position ? $position->getLongitude() : null,
+            'constraints' => $this->searchFormUtility->getConstraintsFromSearchForm($search)
+        ]);
     }
 
     /**
      * Search places nearby a desired location
      *
-     * @param string $latLon        Latitude and longitude, separated by a colon. Example: '50.284923:11.909763'
-     * @param string $search        If no $latLon given, will be geocoded and taken as position to search from instead
-     * @param array $constraints    Constraints for the search results like distance, categories etc.
+     * @param float $latitude The latitude
+     * @param float $longitude The longitude
+     * @param array $constraints Constraints for the search results like distance, categories etc.
      */
-    public function searchAction(string $latLon = null, string $search = null, array $constraints = null): void
+    public function searchAction(float $latitude = null, float $longitude = null, array $constraints = []): void
     {
-
+        // TODO: Implement
     }
 
     /**
      * Show a single place
-     * @param int $place    A single place uid
+     * @param int $place A single place uid
      */
     public function showAction(int $place)
     {
-
+        // TODO: Implement
     }
 }

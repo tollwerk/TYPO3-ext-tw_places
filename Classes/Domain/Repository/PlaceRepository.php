@@ -40,7 +40,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class PlaceRepository extends Repository
 {
-    public function findBySearchString(string $search)
+    public function search(float $latitude = null, float $longitude = null, array $constraints = [])
     {
         //
     }
