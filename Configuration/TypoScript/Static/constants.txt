@@ -1,0 +1,10 @@
+plugin.tx_twplaces {
+    view {
+        # cat=plugin.tx_places/file/10; type=string; label=LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:file.templateRootPath
+        templateRootPath = EXT:tw_places/Resources/Private/Templates/
+        # cat=plugin.tx_places/file/11; type=string; label=LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:file.partialRootPath
+        partialRootPath = EXT:tw_places/Resources/Private/Partials/
+        # cat=plugin.tx_places/file/12; type=string; label=LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:file.layoutRootPath
+        layoutRootPath = EXT:tw_places/Resources/Private/Layouts/
+    }
+}

@@ -1,0 +1,8 @@
+plugin.tx_twplaces {
+    view {
+        templateRootPath = {$plugin.tx_twplaces.view.templateRootPath}
+        partialRootPath = {$plugin.tx_twplaces.view.partialRootPath}
+        layoutRootPath = {$plugin.tx_twplaces.view.layoutRootPath}
+    }
+}
+
