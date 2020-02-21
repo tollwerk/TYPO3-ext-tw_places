@@ -32,48 +32,58 @@
 
 use Tollwerk\TwBase\Utility\TcaUtility;
 use Tollwerk\TwPlaces\Evaluation\CoordinateEvaluation;
+use Tollwerk\TwPlaces\Domain\Model\Place;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Resource\File;
 
 return [
-    'ctrl'      => [
-        'title'                    => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place',
-        'label'                    => 'name',
-        'tstamp'                   => 'tstamp',
-        'crdate'                   => 'crdate',
-        'cruser_id'                => 'cruser_id',
-        'sortby'                   => 'sorting',
-        'default_sortby'           => 'sorting ASC',
-        'dividers2tabs'            => true,
-        'delete'                   => 'deleted',
-        'enablecolumns'            => [
+    'ctrl' => [
+        'title' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place',
+        'label' => 'name',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'sortby' => 'sorting',
+        'default_sortby' => 'sorting ASC',
+        'dividers2tabs' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => [
             'disabled' => 'hidden, starttime, endtime',
         ],
-        'languageField'            => 'sys_language_uid',
-        'transOrigPointerField'    => 'l10n_parent',
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',
-        'searchFields'             => 'name',
-        'iconfile'                 => 'EXT:tw_places/Resources/Public/Icons/Backend/Location2.svg'
+        'searchFields' => 'name',
+        'iconfile' => 'EXT:tw_places/Resources/Public/Icons/Backend/Location2.svg'
     ],
     'interface' => [
         'showRecordFieldList' => 'hidden, title',
     ],
-    'palettes'  => [
+    'palettes' => [
+        'name_type' => ['showitem' => 'name, type'],
         'lat_long' => ['showitem' => 'latitude, longitude'],
         'default_restrictions' => ['showitem' => 'hidden, starttime, endtime'],
+        'address' => ['showitem' => 'postal_code, country, address_level_1, address_level_2, street_address'],
+        'contact' => ['showitem' => 'email, phone, url'],
     ],
-    'types'     => [
-        '1' => [
+    'types' => [
+        Place::TYPE_LOCATION => [
             'showitem' => TcaUtility::createShowitemString([
                 'LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general' => [
-                    'name',
+                    ['name_type'],
                     ['lat_long'],
+                    ['address'],
+                    ['contact'],
+                    'image',
+                    'description',
                 ],
-                'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access'  => [
+                'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access' => [
                     ['default_restrictions'],
                 ],
             ]),
         ],
     ],
-    'columns'   => [
+    'columns' => [
         'hidden' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.visible',
@@ -165,8 +175,33 @@ return [
                 'default' => ''
             ]
         ],
-        'name'            => [
-            'label'  => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.name',
+        'type' => [
+            'exclude' => true,
+            'l10n_mode' => 'exclude',
+            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.type',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'default' => Place::TYPE_ADDRESS,
+                'items' => [
+                    ['', 0],
+                    [
+                        'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.type.'.Place::TYPE_LOCATION,
+                        Place::TYPE_LOCATION
+                    ],
+                    [
+                        'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.type.'.Place::TYPE_ADDRESS,
+                        Place::TYPE_ADDRESS
+                    ],
+                    [
+                        'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.type.'.Place::TYPE_CONTACT,
+                        Place::TYPE_CONTACT
+                    ],
+                ],
+            ],
+        ],
+        'name' => [
+            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.name',
             'config' => [
                 'type' => 'input',
                 'size' => 32,
@@ -189,6 +224,129 @@ return [
                 'type' => 'input',
                 'size' => 16,
                 'eval' => 'required,'.CoordinateEvaluation::class
+            ]
+        ],
+        'description' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.description',
+            'config' => [
+                'type'           => 'text',
+                'eval'           => 'trim',
+                'enableRichtext' => true,
+             ]
+        ],
+        'image'                 => [
+            'exclude' => true,
+            'label'   => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tw_places_domain_model_product.spotlight_image',
+            'config'  => ExtensionManagementUtility::getFileFieldTCAConfig(
+                'spotlight_image',
+                [
+                    'appearance'       => [
+                        'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference',
+                        'fileUploadAllowed'          => false,
+                        'collapseAll'                => true,
+                    ],
+                    'overrideChildTca' => [
+                        'types' => [
+                            '0'                        => [
+                                'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+                            ],
+                            File::FILETYPE_TEXT        => [
+                                'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+                            ],
+                            File::FILETYPE_IMAGE       => [
+                                'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+                            ],
+                            File::FILETYPE_AUDIO       => [
+                                'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+                            ],
+                            File::FILETYPE_VIDEO       => [
+                                'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+                            ],
+                            File::FILETYPE_APPLICATION => [
+                                'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+                            ]
+                        ],
+                    ],
+
+                    'maxitems' => 1,
+                    'minitems' => 0
+                ],
+                $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+            ),
+        ],
+        'postal_code' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.postal_code',
+            'config' => [
+                'type'           => 'input',
+            ]
+        ],
+        'country' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.country',
+            'config' => [
+                'type'  => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['DE', 'DE'],
+                    ['US', 'US']
+                ]
+            ],
+        ],
+        'address_level_1' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.address_level_1',
+            'config' => [
+                'type'           => 'input',
+            ]
+        ],
+        'address_level_2' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.address_level_2',
+            'config' => [
+                'type'           => 'input',
+            ]
+        ],
+        'street_address' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.street_address',
+            'config' => [
+                'type'           => 'text',
+                'eval'           => 'trim',
+            ]
+        ],
+        'email' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.email',
+            'config' => [
+                'type'           => 'input',
+            ]
+        ],
+        'phone' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.phone',
+            'config' => [
+                'type'           => 'input',
+            ]
+        ],
+        'url' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.url',
+            'config' => [
+                'type'           => 'input',
             ]
         ],
     ],

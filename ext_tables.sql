@@ -4,9 +4,23 @@
 CREATE TABLE tx_twplaces_domain_model_place
 (
 
+    type             INT(11)             DEFAULT '0'    NOT NULL,
     name             VARCHAR(255)        DEFAULT ''     NOT NULL,
     latitude         DECIMAL(19, 16)     DEFAULT '0.00' NOT NULL,
     longitude        DECIMAL(19, 16)     DEFAULT '0.00' NOT NULL,
+
+
+    description      TEXT                 DEFAULT ''    NOT NULL,
+    image            INT(11)              DEFAULT '0'   NOT NULL,
+    postal_code      INT(11)              DEFAULT '0'   NOT NULL,
+    country          VARCHAR(4)           DEFAULT ''  NOT NULL,
+    address_level_1  VARCHAR(255)         DEFAULT ''  NOT NULL,
+    address_level_2  VARCHAR(255)         DEFAULT ''  NOT NULL,
+    street_address   VARCHAR(255)         DEFAULT ''  NOT NULL,
+    email            VARCHAR(255)         DEFAULT ''  NOT NULL,
+    phone            VARCHAR(255)         DEFAULT ''  NOT NULL,
+    url              VARCHAR(255)         DEFAULT ''  NOT NULL,
+
 
     uid              INT(11)                            NOT NULL AUTO_INCREMENT,
     pid              INT(11)             DEFAULT '0'    NOT NULL,

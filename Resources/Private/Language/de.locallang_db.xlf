@@ -11,6 +11,22 @@
                 <source>Place</source>
                 <target>Ort</target>
             </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.type">
+                <source>Type</source>
+                <target>Typ</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.type.1">
+                <source>Location</source>
+                <target>Einfacher Ort</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.type.2">
+                <source>Address</source>
+                <target>Adresse</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.type.3">
+                <source>Contact</source>
+                <target>Kontakt</target>
+            </trans-unit>
             <trans-unit id="tx_twplaces_domain_model_place.name">
                 <source>Name</source>
                 <target>Name</target>
@@ -22,6 +38,46 @@
             <trans-unit id="tx_twplaces_domain_model_place.longitude">
                 <source>Longitude</source>
                 <target>Breitengrad</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.description">
+                <source>Description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.image">
+                <source>Image</source>
+                <target>Bild</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.postal_code">
+                <source>Postal code</source>
+                <target>Postleitzahl</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.country">
+                <source>Country</source>
+                <target>Land</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.address_level_1">
+                <source>State</source>
+                <target>Bundesland</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.address_level_2">
+                <source>City</source>
+                <target>Stadt</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.street_address">
+                <source>Street address</source>
+                <target>Straße und Hausnummer</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.email">
+                <source>Email</source>
+                <target>E-Mail</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.phone">
+                <source>Phone</source>
+                <target>Telefon</target>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.url">
+                <source>Website</source>
+                <target>Website</target>
             </trans-unit>
         </body>
     </file>

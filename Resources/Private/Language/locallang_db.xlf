@@ -9,6 +9,18 @@
             <trans-unit id="tx_twplaces_domain_model_place">
                 <source>Place</source>
             </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.type">
+                <source>Type</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.type.1">
+                <source>Location</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.type.2">
+                <source>Address</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.type.3">
+                <source>Contact</source>
+            </trans-unit>
             <trans-unit id="tx_twplaces_domain_model_place.name">
                 <source>Name</source>
             </trans-unit>
@@ -17,6 +29,36 @@
             </trans-unit>
             <trans-unit id="tx_twplaces_domain_model_place.longitude">
                 <source>Longitude</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.description">
+                <source>Description</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.image">
+                <source>Image</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.postal_code">
+                <source>Postal code</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.country">
+                <source>Country</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.address_level_1">
+                <source>State</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.address_level_2">
+                <source>City</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.street_address">
+                <source>Street address</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.email">
+                <source>Email</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.phone">
+                <source>Phone</source>
+            </trans-unit>
+            <trans-unit id="tx_twplaces_domain_model_place.url">
+                <source>Website</source>
             </trans-unit>
         </body>
     </file>

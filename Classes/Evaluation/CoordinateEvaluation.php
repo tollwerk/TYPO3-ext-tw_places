@@ -88,7 +88,6 @@ class CoordinateEvaluation
      */
     public function evaluateFieldValue($value, $is_in, &$set) : string
     {
-        die("2");
         return self::coordinateEval($value);
     }
 
@@ -101,7 +100,6 @@ class CoordinateEvaluation
      */
     public function deevaluateFieldValue(array $parameters) : string
     {
-        die("3");
         return self::coordinateEval($parameters['value']);
     }
 }
