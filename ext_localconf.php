@@ -38,6 +38,14 @@ call_user_func(
     function() {
         // Register custom classes for TCA column 'eval' TODO: Fix. Right now, the eval is not executed
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tce']['formevals'][\Tollwerk\TwPlaces\Evaluation\CoordinateEvaluation::class] = '';
+
+        // Register plugins
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'TwPlaces',
+            'Search',
+            [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'search, show'],
+            [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'search'],
+        );
     }
 );
 

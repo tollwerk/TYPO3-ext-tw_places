@@ -36,5 +36,11 @@ defined('TYPO3_MODE') || die('Access denied.');
 
 call_user_func(
     function() {
+        // Register plugins for backend users
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            'TwPlaces',
+            'Search',
+            'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:plugin.search'
+        );
     }
 );

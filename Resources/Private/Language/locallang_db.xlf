@@ -6,6 +6,11 @@
             <trans-unit id="tw_places">
                 <source>Places and map search</source>
             </trans-unit>
+
+            <trans-unit id="plugin.search">
+                <source>Places | Search</source>
+            </trans-unit>
+
             <trans-unit id="tx_twplaces_domain_model_place">
                 <source>Place</source>
             </trans-unit>

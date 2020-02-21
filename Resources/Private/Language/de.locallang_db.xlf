@@ -7,6 +7,12 @@
                 <source>Places and map search</source>
                 <target>Orte und Kartensuche</target>
             </trans-unit>
+
+            <trans-unit id="plugin.search">
+                <source>Places | Search</source>
+                <target>Places | Suche</target>
+            </trans-unit>
+
             <trans-unit id="tx_twplaces_domain_model_place">
                 <source>Place</source>
                 <target>Ort</target>

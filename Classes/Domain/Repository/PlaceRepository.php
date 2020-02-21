@@ -1,6 +1,6 @@
 <?php
 /**
- * RWS Relaunch
+ * tw_places
  *
  * @category   Tollwerk
  * @package    Tollwerk\TwPlaces
@@ -13,7 +13,7 @@
 /***********************************************************************************
  *  The MIT License (MIT)
  *
- *  Copyright © 2019 Klaus Fiedler <klaus@tollwerk.de>
+ *  Copyright © 2020 Klaus Fiedler <klaus@tollwerk.de>
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy of
  *  this software and associated documentation files (the "Software"), to deal in
@@ -40,5 +40,8 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class PlaceRepository extends Repository
 {
-
+    public function findBySearchString(string $search)
+    {
+        //
+    }
 }
