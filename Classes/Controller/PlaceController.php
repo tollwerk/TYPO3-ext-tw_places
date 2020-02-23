@@ -87,7 +87,8 @@ class PlaceController extends ActionController
         $this->forward('search', 'Place', 'TwPlaces', [
             'latitude' => $position ? $position->getLatitude() : null,
             'longitude' => $position ? $position->getLongitude() : null,
-            'constraints' => $this->searchFormUtility->getConstraintsFromSearchForm($search)
+            'constraints' => $this->searchFormUtility->getConstraintsFromSearchForm($search),
+            'lastSearchTerm' => !empty($search['geoselect-search']) ? $search['geoselect-search'] : null,
         ]);
     }
 
@@ -97,11 +98,13 @@ class PlaceController extends ActionController
      * @param float $latitude The latitude
      * @param float $longitude The longitude
      * @param array $constraints Constraints for the search results like distance, categories etc.
+     * @param string|null $lastSearchTerm The last search term
      */
-    public function searchAction(float $latitude = null, float $longitude = null, array $constraints = []): void
+    public function searchAction(float $latitude = null, float $longitude = null, array $constraints = [], string $lastSearchTerm = null): void
     {
         $places = $this->placeRepository->search($latitude, $longitude, $constraints);
         $this->view->assign('places', $places);
+        $this->view->assign('lastSearchTerm', $lastSearchTerm);
     }
 
     /**
