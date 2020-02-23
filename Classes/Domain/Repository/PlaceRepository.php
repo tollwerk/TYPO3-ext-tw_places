@@ -36,9 +36,12 @@
 namespace Tollwerk\TwPlaces\Domain\Repository;
 
 
+use Tollwerk\TwPlaces\Domain\Model\Place;
+use Tollwerk\TwRuag\Domain\Model\Product\Ammo;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class PlaceRepository extends Repository
@@ -78,6 +81,11 @@ class PlaceRepository extends Repository
         // TODO: Respoect exclude_countries, include_countries
 
         $result = $concreteQueryBuilder->execute()->fetchAll();
+
+        // Because the $queryBuilder returns raw results we have to create the objects with dataMapper
+        $dataMapper = $this->objectManager->get(DataMapper::class);
+        $result = $dataMapper->map(Place::class, $result);
+
         return $result;
 
     }

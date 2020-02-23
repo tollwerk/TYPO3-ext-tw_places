@@ -414,6 +414,11 @@ return [
                 'type' => 'input',
             ]
         ],
+        'distance' => [
+            'config' => [
+                'type' => 'passthrough'
+            ],
+        ],
     ],
 ];
 

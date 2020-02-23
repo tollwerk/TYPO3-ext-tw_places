@@ -76,9 +76,9 @@ class Place extends AbstractEntity
     protected $image = NULL;
 
     /**
-     * @var int
+     * @var string
      */
-    protected $postalCode = 0;
+    protected $postalCode = '';
 
     /**
      * @var string
@@ -88,12 +88,17 @@ class Place extends AbstractEntity
     /**
      * @var string
      */
-    protected $addressLevel1 = '';
+    protected $region = '';
 
     /**
      * @var string
      */
-    protected $addressLevel2 = '';
+    protected $state = '';
+
+    /**
+     * @var string
+     */
+    protected $city = '';
 
     /**
      * @var string
@@ -114,6 +119,11 @@ class Place extends AbstractEntity
      * @var string
      */
     protected $url = '';
+
+    /**
+     * @var int
+     */
+    protected $distance = 0;
 
     /**
      * @return int
@@ -212,22 +222,6 @@ class Place extends AbstractEntity
     }
 
     /**
-     * @return int
-     */
-    public function getPostalCode(): int
-    {
-        return $this->postalCode;
-    }
-
-    /**
-     * @param int $postalCode
-     */
-    public function setPostalCode(int $postalCode)
-    {
-        $this->postalCode = $postalCode;
-    }
-
-    /**
      * @return string
      */
     public function getCountry(): string
@@ -246,33 +240,33 @@ class Place extends AbstractEntity
     /**
      * @return string
      */
-    public function getAddressLevel1(): string
+    public function getRegion(): string
     {
-        return $this->addressLevel1;
+        return $this->region;
     }
 
     /**
-     * @param string $addressLevel1
+     * @param string $region
      */
-    public function setAddressLevel1(string $addressLevel1)
+    public function setRegion(string $region)
     {
-        $this->addressLevel1 = $addressLevel1;
+        $this->region = $region;
     }
 
     /**
      * @return string
      */
-    public function getAddressLevel2(): string
+    public function getCity(): string
     {
-        return $this->addressLevel2;
+        return $this->city;
     }
 
     /**
-     * @param string $addressLevel2
+     * @param string $city
      */
-    public function setAddressLevel2(string $addressLevel2)
+    public function setCity(string $city)
     {
-        $this->addressLevel2 = $addressLevel2;
+        $this->city = $city;
     }
 
     /**
@@ -337,6 +331,54 @@ class Place extends AbstractEntity
     public function setUrl(string $url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostalCode(): string
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * @param string $postalCode
+     */
+    public function setPostalCode(string $postalCode): void
+    {
+        $this->postalCode = $postalCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDistance(): int
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @param int $distance
+     */
+    public function setDistance(int $distance): void
+    {
+        $this->distance = $distance;
     }
 }
 
