@@ -46,6 +46,7 @@ $EM_CONF['tw_places'] = [
             'typo3' => '10.0.0-10.99.99',
             'tw_base' => '*',
             'tw_geo' => '1.4.0-',
+            'static_info_tables' => '6.8.2-',
         ],
         'conflicts' => [],
         'suggests' => [],

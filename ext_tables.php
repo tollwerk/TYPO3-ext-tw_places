@@ -49,5 +49,10 @@ call_user_func(
             'Search',
             'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:plugin.search'
         );
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            'TwPlaces',
+            'List',
+            'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:plugin.list'
+        );
     }
 );

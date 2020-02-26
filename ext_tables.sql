@@ -15,7 +15,7 @@ CREATE TABLE tx_twplaces_domain_model_place
     description      TEXT                DEFAULT ''     NOT NULL,
     image            INT(11)             DEFAULT '0'    NOT NULL,
     postal_code      VARCHAR(255)        DEFAULT ''     NOT NULL,
-    country          VARCHAR(255)        DEFAULT ''     NOT NULL,
+    country          INT(11)             DEFAULT '0'    NOT NULL,
     region           VARCHAR(255)        DEFAULT ''     NOT NULL,
     state            VARCHAR(255)        DEFAULT ''     NOT NULL,
     city             VARCHAR(255)        DEFAULT ''     NOT NULL,

@@ -65,7 +65,7 @@ return [
         'person' => ['showitem' => 'given_name, family_name'],
         'lat_long' => ['showitem' => 'latitude, longitude'],
         'default_restrictions' => ['showitem' => 'hidden, starttime, endtime'],
-        'address_1' => ['showitem' => 'country, region, state'],
+        'address_1' => ['showitem' => 'region, state'],
         'address_2' => ['showitem' => 'postal_code, city, street_address'],
         'contact' => ['showitem' => 'phone, fax, email, url'],
     ],
@@ -89,6 +89,7 @@ return [
                     ['name_type'],
                     ['lat_long'],
                     'description',
+                    'country',
                     ['address_1'],
                     ['address_2'],
                     'image',
@@ -106,6 +107,7 @@ return [
                     ['lat_long'],
                     'description',
                     ['contact'],
+                    'country',
                     ['address_1'],
                     ['address_2'],
                     'image',
@@ -346,15 +348,15 @@ return [
             ]
         ],
         'country' => [
+            'l10n_mode' => 'exclude',
             'exclude' => true,
-            'label' => 'LLL:EXT:tw_places/Resources/Private/Language/locallang_db.xlf:tx_twplaces_domain_model_place.country',
+            'label' => 'LLL:EXT:tw_ruag/Resources/Private/Language/locallang_db.xlf:tx_twruag_domain_model_shooter.country',
             'config' => [
                 'type' => 'select',
-                'renderType' => 'selectSingle',
-                'items' => [
-                    ['DE', 'DE'],
-                    ['US', 'US']
-                ]
+                'renderType' => 'selectMultipleSideBySide',
+                'foreign_table' => 'static_countries',
+                'enableMultiSelectFilterTextfield' => true,
+                'maxitems' => 1,
             ],
         ],
         'region' => [

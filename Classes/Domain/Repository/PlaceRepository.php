@@ -58,19 +58,30 @@ class PlaceRepository extends Repository
             ->createQueryBuilder()
             ->getConcreteQueryBuilder();
 
+        // Create string for querying the distance
+        if ($latitude !== null && $longitude !== null) {
+            $distanceQuery =
+                '(round(
+                    6371000 * acos(
+                        cos(radians('.$latitude.'))
+                        * cos(radians(place.latitude))
+                        * cos(radians(place.longitude) - radians('.$longitude.'))
+                        + sin(radians('.$latitude.'))
+                        * sin(radians(place.latitude))
+                        )
+                )) AS distance';
+        } else {
+            $distanceQuery = '0 as distance';
+        }
+
         // Build basic query
         $concreteQueryBuilder->select(
             'place.*',
-            '(round(
-                6371000 * acos(
-                    cos(radians(' . $latitude . '))
-                    * cos(radians(place.latitude))
-                    * cos(radians(place.longitude) - radians(' . $longitude . '))
-                    + sin(radians(' . $latitude . '))
-                    * sin(radians(place.latitude))
-                    )
-            )) AS distance')
+            $distanceQuery
+        )
             ->from('tx_twplaces_domain_model_place', 'place')
+            ->where($concreteQueryBuilder->expr()->eq('place.deleted', 0))
+            ->andWhere($concreteQueryBuilder->expr()->eq('place.hidden', 0))
             ->groupBy('uid')
             ->orderBy('distance', 'ASC');
 

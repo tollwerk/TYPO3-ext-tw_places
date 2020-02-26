@@ -36,6 +36,7 @@
 namespace Tollwerk\TwPlaces\Domain\Model;
 
 
+use SJBR\StaticInfoTables\Domain\Model\Country;
 use Tollwerk\TwRuag\Domain\Model\AbstractEntity;
 
 class Place extends AbstractEntity
@@ -81,9 +82,9 @@ class Place extends AbstractEntity
     protected $postalCode = '';
 
     /**
-     * @var string
+     * @var Country
      */
-    protected $country = '';
+    protected $country = null;
 
     /**
      * @var string
@@ -222,17 +223,17 @@ class Place extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return Country
      */
-    public function getCountry(): string
+    public function getCountry(): Country
     {
         return $this->country;
     }
 
     /**
-     * @param string $country
+     * @param Country $country
      */
-    public function setCountry(string $country)
+    public function setCountry(Country $country): void
     {
         $this->country = $country;
     }

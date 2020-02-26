@@ -35,6 +35,7 @@
 
 namespace Tollwerk\TwPlaces\Controller;
 
+use Tollwerk\TwGeo\Utility\GeoUtility;
 use Tollwerk\TwPlaces\Domain\Repository\PlaceRepository;
 use Tollwerk\TwPlaces\Utility\SearchFormUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -50,6 +51,9 @@ class PlaceController extends ActionController
      */
     protected $searchFormUtility = null;
 
+    /** @var GeoUtility */
+    protected $geoUtility = null;
+
     /**
      * @var PlaceRepository
      */
@@ -57,22 +61,30 @@ class PlaceController extends ActionController
 
     /**
      * PlaceController constructor.
+     *
      * @param SearchFormUtility $searchFormUtility
      * @param PlaceRepository $placeRepository
      */
-    public function __construct(SearchFormUtility $searchFormUtility, PlaceRepository $placeRepository)
+    public function __construct(SearchFormUtility $searchFormUtility, PlaceRepository $placeRepository, GeoUtility $geoUtility)
     {
         $this->searchFormUtility = $searchFormUtility;
         $this->placeRepository = $placeRepository;
+        $this->geoUtility = $geoUtility;
     }
 
     /**
      * List places
-     * @param array $places Array with place uids
+     *
+     * @param array $filters Array with filters
      */
-    public function listAction(array $places = []): void
+    public function listAction(array $filters = []): void
     {
-        // TODO: Implement
+        $position = $this->geoUtility->getGeoLocation();
+        $this->view->assign('places', $this->placeRepository->search(
+            $position ? $position->getLatitude() : null,
+            $position ? $position->getLongitude() : null,
+            $filters
+        ));
     }
 
     /**
@@ -95,9 +107,9 @@ class PlaceController extends ActionController
     /**
      * Search places nearby a desired location
      *
-     * @param float $latitude The latitude
-     * @param float $longitude The longitude
-     * @param array $constraints Constraints for the search results like distance, categories etc.
+     * @param float $latitude             The latitude
+     * @param float $longitude            The longitude
+     * @param array $constraints          Constraints for the search results like distance, categories etc.
      * @param string|null $lastSearchTerm The last search term
      */
     public function searchAction(float $latitude = null, float $longitude = null, array $constraints = [], string $lastSearchTerm = null): void
@@ -109,6 +121,7 @@ class PlaceController extends ActionController
 
     /**
      * Show a single place
+     *
      * @param int $place A single place uid
      */
     public function showAction(int $place)
