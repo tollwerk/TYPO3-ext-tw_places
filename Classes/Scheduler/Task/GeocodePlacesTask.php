@@ -62,9 +62,10 @@ class GeocodePlacesTask extends AbstractTask
      *
      * TODO: Make it possible to update the records continually by checking tstamp etc.
      *
+     * @param int $limit
      * @return array
      */
-    protected function getPlaceRecords(): array
+    protected function getPlaceRecords(int $limit = 10): array
     {
         $this->queryBuilder
             ->select(
@@ -82,16 +83,10 @@ class GeocodePlacesTask extends AbstractTask
                 'place.country = country.uid'
             )
             ->where($this->queryBuilder->expr()->eq('place.deleted', 0))
-            ->andWhere(
-                $this->queryBuilder->expr()->orX(
-                    $this->queryBuilder->expr()->eq('place.geocoded', 0),
-                    $this->queryBuilder->expr()->isNull('place.geocoded')
-                )
-            )
             ->orderBy('geocoded', 'ASC')
             ->addOrderBy('longitude', 'ASC')
             ->addOrderBy('tstamp', 'ASC')
-            ->setMaxResults(50);
+            ->setMaxResults($limit);
 
         return $this->queryBuilder->execute()->fetchAll();
     }
@@ -126,7 +121,7 @@ class GeocodePlacesTask extends AbstractTask
         $geoUtility = GeneralUtility::makeInstance(GeoUtility::class);
         $places = $this->getPlaceRecords();
 
-        foreach ($places as &$place) {
+        foreach ($places as $place) {
             $geocodeString = implode(', ', [
                 $place['street_address'],
                 $place['postal_code'].' '.$place['city'],
@@ -134,13 +129,19 @@ class GeocodePlacesTask extends AbstractTask
             ]);
 
             $position = $geoUtility->geocode($geocodeString);
-            if ($position) {
-                $this->updatePlace(
-                    $place['uid'],
-                    $position->getLatitude(),
-                    $position->getLongitude()
-                );
-            }
+            debug([
+                $place,
+                $geocodeString,
+                $position,
+            ]);
+
+
+            $this->updatePlace(
+                $place['uid'],
+                $position ? $position->getLatitude() : null,
+                $position ?  $position->getLongitude() : null
+            );
+
 
             // Don't overuse the geocoding APIs!
             // especially when using free public projects like https://nominatim.openstreetmap.org/

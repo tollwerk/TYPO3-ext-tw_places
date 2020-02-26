@@ -79,6 +79,8 @@ class PlaceController extends ActionController
      */
     public function listAction(array $filters = []): void
     {
+        $filters['limit'] = 10;
+
         $position = $this->geoUtility->getGeoLocation();
         $this->view->assign('places', $this->placeRepository->search(
             $position ? $position->getLatitude() : null,
@@ -114,6 +116,8 @@ class PlaceController extends ActionController
      */
     public function searchAction(float $latitude = null, float $longitude = null, array $constraints = [], string $lastSearchTerm = null): void
     {
+        $constraints['limit'] = 10;
+
         $places = $this->placeRepository->search($latitude, $longitude, $constraints);
         $this->view->assign('places', $places);
         $this->view->assign('lastSearchTerm', $lastSearchTerm);

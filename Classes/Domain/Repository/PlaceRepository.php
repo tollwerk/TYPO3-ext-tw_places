@@ -83,9 +83,15 @@ class PlaceRepository extends Repository
             ->where($concreteQueryBuilder->expr()->eq('place.deleted', 0))
             ->andWhere($concreteQueryBuilder->expr()->eq('place.hidden', 0))
             ->groupBy('uid')
-            ->orderBy('distance', 'ASC');
+            ->orderBy('geocoded', 'DESC')
+            ->addOrderBy('distance', 'ASC');
 
         // TODO: Implement constraints
+
+        if(!empty($constraints['limit'])) {
+            $concreteQueryBuilder->setMaxResults(intval($constraints['limit']));
+        }
+
         // TODO: Respect storage pids
         // TODO: Check domain
         // TODO: Check enable fields

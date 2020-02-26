@@ -5,6 +5,7 @@ namespace Tollwerk\TwPlaces\Domain\Factory\Form;
 
 
 use Tollwerk\TwBase\Domain\Model\UnsubmittableFormDefinition;
+use Tollwerk\TwGeo\Domain\Model\FormElements\Geoselect;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Form\Domain\Configuration\ConfigurationService;
@@ -84,9 +85,15 @@ class SearchFormFactory extends AbstractFormFactory
         $this->form->setRenderingOption('honeypot', ['enable' => false]);
         $this->form->setRenderingOption('controllerAction', 'searchForm');
 
+
+
         // Create form page and fields
         $page = $this->form->createPage('search');
+
+        /** @var Geoselect $geoselectField */
         $geoselectField = $page->createElement('geoselect', 'Geoselect');
+        $geoselectField->getSearchField()->setProperty('theme', $configuration['theme']);
+
 
         $this->triggerFormBuildingFinished($this->form);
         return $this->form;
