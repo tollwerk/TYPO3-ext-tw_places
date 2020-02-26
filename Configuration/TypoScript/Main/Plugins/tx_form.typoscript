@@ -1,0 +1,7 @@
+plugin.tx_form {
+    settings {
+        yamlConfigurations {
+            20 = EXT:tw_places/Configuration/Yaml/Form/CustomFormSetup.yaml
+        }
+    }
+}

@@ -72,7 +72,7 @@ class SearchFormFactory extends AbstractFormFactory
         // Set configuration
         $this->configuration = $configuration;
         $configurationService = $this->objectManager->get(ConfigurationService::class);
-        $prototypeConfiguration = $configurationService->getPrototypeConfiguration($prototypeName);
+        $prototypeConfiguration = $configurationService->getPrototypeConfiguration('tx_twplaces_search');
         $prototypeConfiguration['overrideConfiguration'] = $this->configuration;
 
         // Basic form setup

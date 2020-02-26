@@ -44,7 +44,7 @@ call_user_func(
             'TwPlaces',
             'Search',
             [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'searchForm, search, show'],
-            [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'searchForm, search'],
+            [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'searchForm, search']
         );
     }
 );

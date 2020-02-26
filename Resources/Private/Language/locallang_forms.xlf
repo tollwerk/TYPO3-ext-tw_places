@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-11-04T10:00:00Z" product-name="tw_places">
+        <header/>
+        <body>
+            <trans-unit id="element.geoselect-search.properties.label">
+                <source>Search</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

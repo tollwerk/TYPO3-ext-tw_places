@@ -1,0 +1,15 @@
+TYPO3:
+    CMS:
+        Form:
+            prototypes:
+                tx_twplaces_search:
+                    __inheritances:
+                        10: 'TYPO3.CMS.Form.prototypes.standard'
+                    formElementsDefinition:
+                        Form:
+                            renderingOptions:
+                                translation:
+                                    translationFiles:
+                                        100: 'EXT:tw_places/Resources/Private/Language/locallang_forms.xlf'
+                                templateRootPaths:
+                                    100: 'EXT:tw_places/Resources/Private/Templates/Place/'

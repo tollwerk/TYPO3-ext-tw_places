@@ -6,3 +6,4 @@ plugin.tx_twplaces {
     }
 }
 
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:tw_places/Configuration/TypoScript/Main/main.typoscript">
