@@ -55,6 +55,13 @@ call_user_func(
             [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'list, show'],
             [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'list']
         );
+
+        // Register scheduler tasks
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Tollwerk\TwPlaces\Scheduler\Task\GeocodePlacesTask::class] = [
+            'extension' => 'tw_places',
+            'title' => 'Places: Geocode',
+            'description' => 'Try to determine and set the latitude and longitudes for place records',
+        ];
     }
 );
 
