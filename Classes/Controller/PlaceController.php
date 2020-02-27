@@ -117,7 +117,7 @@ class PlaceController extends ActionController
     public function searchAction(float $latitude = null, float $longitude = null, array $constraints = [], string $searchTerm = null): void
     {
         $this->view->assign('searchTerm', $searchTerm);
-        $constraints['limit'] = 10;
+        $constraints['limit'] = 3;
 
         // Get places
         $places = [];
