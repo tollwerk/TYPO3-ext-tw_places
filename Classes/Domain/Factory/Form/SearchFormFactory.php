@@ -27,7 +27,7 @@ class SearchFormFactory extends AbstractFormFactory
      *
      * @var string
      */
-    protected static $key = 'search';
+    protected static $key = 'placeSearchForm';
 
     /**
      * The typoscript setup for plugin.tx_twrws
@@ -92,6 +92,7 @@ class SearchFormFactory extends AbstractFormFactory
 
         /** @var Geoselect $geoselectField */
         $geoselectField = $page->createElement('geoselect', 'Geoselect');
+        $geoselectField->setProperty('searchTerm', $configuration['searchTerm']);
         $geoselectField->getSearchField()->setProperty('theme', $configuration['theme']);
 
 

@@ -44,8 +44,18 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
+/**
+ * Class PlaceRepository
+ * @package Tollwerk\TwPlaces\Domain\Repository
+ */
 class PlaceRepository extends Repository
 {
+    /**
+     * @param float|null $latitude
+     * @param float|null $longitude
+     * @param array $constraints
+     * @return mixed[]
+     */
     public function search(float $latitude = null, float $longitude = null, array $constraints = [])
     {
         // Get high level query object for getting storage pids etc.

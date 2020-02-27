@@ -12,5 +12,6 @@ version number 2.0.0.
 ### Form Framework 
 * plugin.tx_form.settings.yamlConfigurations.20 = EXT:tw_places/Configuration/Yaml/Form/CustomFormSetup.yaml
 
-* Possible configuration values for FormFactory when calling `<formvh:render factoryClass="Tollwerk\TwPlaces\Domain\Factory\Form\SearchFormFactory"/>`
-    * theme (string), will be set as property "theme" in the search field element     
+* Possible configuration values for FormFactowry when calling `<formvh:render factoryClass="Tollwerk\TwPlaces\Domain\Factory\Form\SearchFormFactory"/>`
+    * theme (string), will be set as property "theme" in the search field element
+    * searchTerm (string), the current search term     

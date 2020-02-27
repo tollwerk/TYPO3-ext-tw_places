@@ -40,6 +40,10 @@ use Tollwerk\TwGeo\Utility\GeoUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
+/**
+ * Class SearchFormUtility
+ * @package Tollwerk\TwPlaces\Utility
+ */
 class SearchFormUtility implements SingletonInterface
 {
     /**
