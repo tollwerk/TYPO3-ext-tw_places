@@ -51,6 +51,35 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class PlaceRepository extends Repository
 {
     /**
+     * @var array
+     */
+    protected $simpleFilterProperties = [
+        'country',
+    ];
+
+    /**
+     * For some query constraints we always want to be able to find by multiple values.
+     * So, if a single non-array value gets passed, convert it into an array.
+     *
+     * @param mixed $value
+     * @param mixed $queryBuilder
+     *
+     * @return array
+     */
+    protected function arrayValue($value, $queryBuilder)
+    {
+        if (!is_array($value)) {
+            return [$queryBuilder->createNamedParameter($value)];
+        }
+
+        $return = [];
+        foreach ($value as $arrayKey => $arrayValue) {
+            $return[$arrayKey] = $arrayValue; //  $queryBuilder->createNamedParameter($arrayValue, \PDO::PARAM_INT);
+        }
+        return $return;
+    }
+
+    /**
      * @param float|null $latitude
      * @param float|null $longitude
      * @param array $constraints
@@ -96,7 +125,12 @@ class PlaceRepository extends Repository
             ->orderBy('geocoded', 'DESC')
             ->addOrderBy('distance', 'ASC');
 
-        // TODO: Implement constraints
+        // Set simple filters with IN (...) constraints
+        foreach ($this->simpleFilterProperties as $property) {
+            if (!empty($constraints[$property])) {
+                $concreteQueryBuilder->andWhere($concreteQueryBuilder->expr()->in('place.'.GeneralUtility::camelCaseToLowerCaseUnderscored($property), $this->arrayValue($constraints[$property], $concreteQueryBuilder)));
+            }
+        }
 
         if(!empty($constraints['limit'])) {
             $concreteQueryBuilder->setMaxResults(intval($constraints['limit']));

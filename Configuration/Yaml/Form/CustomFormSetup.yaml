@@ -11,5 +11,11 @@ TYPO3:
                                 translation:
                                     translationFiles:
                                         10: 'EXT:tw_places/Resources/Private/Language/locallang_forms.xlf'
+                                templateName: 'SearchForm'
                                 templateRootPaths:
-                                    100: 'EXT:tw_places/Resources/Private/Templates/Place/'
+                                    100: 'EXT:tw_places/Resources/Private/Templates/Form/'
+                                partialRootPaths:
+                                    100: 'EXT:tw_places/Resources/Private/Partials/Form/'
+                        FilterPage:
+                            __inheritances:
+                                10: 'TYPO3.CMS.Form.prototypes.standard.formElementsDefinition.Page'

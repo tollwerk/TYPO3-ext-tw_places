@@ -73,20 +73,39 @@ class PlaceController extends ActionController
     }
 
     /**
+     * Processes the submitted list form values
+     * and passes everything on to listAction
+     *
+     * @param array $placeSearchForm
+     */
+    public function listFormAction(array $placeListForm = [])
+    {
+        $filters = [];
+
+        if(!empty($placeListForm['country'])) {
+            $filters['country'] = $placeListForm['country'];
+        }
+
+        $this->forward('list', 'Place', 'TwPlaces', [
+            'filters' => $filters,
+        ]);
+    }
+
+    /**
      * List places
      *
      * @param array $filters Array with filters
      */
     public function listAction(array $filters = []): void
     {
-        $filters['limit'] = 10;
-
         $position = $this->geoUtility->getGeoLocation();
-        $this->view->assign('places', $this->placeRepository->search(
+
+        $places = !empty($filters) ? $this->placeRepository->search(
             $position ? $position->getLatitude() : null,
             $position ? $position->getLongitude() : null,
             $filters
-        ));
+        ) : [];
+        $this->view->assign('places', $places);
     }
 
     /**
@@ -109,9 +128,9 @@ class PlaceController extends ActionController
     /**
      * Search places nearby a desired location
      *
-     * @param float $latitude             The latitude
-     * @param float $longitude            The longitude
-     * @param array $constraints          Constraints for the search results like distance, categories etc.
+     * @param float $latitude The latitude
+     * @param float $longitude The longitude
+     * @param array $constraints Constraints for the search results like distance, categories etc.
      * @param string|null $searchTerm The last search term
      */
     public function searchAction(float $latitude = null, float $longitude = null, array $constraints = [], string $searchTerm = null): void
@@ -121,7 +140,7 @@ class PlaceController extends ActionController
 
         // Get places
         $places = [];
-        if($searchTerm) {
+        if ($searchTerm) {
             $places = $this->placeRepository->search($latitude, $longitude, $constraints);
         }
         $this->view->assign('places', $places);

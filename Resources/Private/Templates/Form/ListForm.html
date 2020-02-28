@@ -1,0 +1,25 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers" data-namespace-typo3-fluid="true">
+<formvh:renderRenderable renderable="{form}">
+    <formvh:form
+            object="{form}"
+            action="{form.renderingOptions.controllerAction}"
+            method="{form.renderingOptions.httpMethod}"
+            id="{form.identifier}"
+            section="{form.identifier}"
+            enctype="{form.renderingOptions.httpEnctype}"
+            addQueryString="{form.renderingOptions.addQueryString}"
+            argumentsToBeExcludedFromQueryString="{form.renderingOptions.argumentsToBeExcludedFromQueryString}"
+            additionalParams="{form.renderingOptions.additionalParams}"
+    >
+        <f:render partial="{form.currentPage.templateName}" arguments="{page: form.currentPage}" />
+        <base:cta value="{form.pages -> f:count()}" type="{f:if(condition: '{type}', then: '{type}')}" cta-type="{f:if(condition: '{ctaType}', then: '{ctaType}', else: 'button')}" cta-theme="{f:if(condition: '{theme}',then: '{theme}', else: 'default')}" class="CallToAction__submit">
+                                    <span class="Form__submit-label">
+                                      {formvh:translateElementProperty(element: form, renderingOptionProperty: 'submitButtonLabel')}
+                                    </span>
+            <f:if condition="{form.formDefinition.renderingOptions.submitButtonIconRight}">
+                <base:icon.use icon="{form.formDefinition.renderingOptions.submitButtonIconRight}"/>
+            </f:if>
+        </base:cta>
+    </formvh:form>
+</formvh:renderRenderable>
+</html>

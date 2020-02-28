@@ -52,7 +52,7 @@ call_user_func(
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'TwPlaces',
             'List',
-            [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'list, show'],
+            [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'listForm, list, show'],
             [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'list']
         );
 
