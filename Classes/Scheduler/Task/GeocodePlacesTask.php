@@ -1,6 +1,6 @@
 <?php
 /**
- * RWS Relaunch
+ * TwPlaces
  *
  * @category   Tollwerk
  * @package    Tollwerk\TwPlaces
@@ -119,7 +119,7 @@ class GeocodePlacesTask extends AbstractTask
 
         /** @var GeoUtility $geoUtility */
         $geoUtility = GeneralUtility::makeInstance(GeoUtility::class);
-        $places = $this->getPlaceRecords();
+        $places = $this->getPlaceRecords(100);
 
         foreach ($places as $place) {
             $geocodeString = implode(', ', [
@@ -129,13 +129,6 @@ class GeocodePlacesTask extends AbstractTask
             ]);
 
             $position = $geoUtility->geocode($geocodeString);
-            debug([
-                $place,
-                $geocodeString,
-                $position,
-            ]);
-
-
             $this->updatePlace(
                 $place['uid'],
                 $position ? $position->getLatitude() : null,
