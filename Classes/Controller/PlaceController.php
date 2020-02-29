@@ -35,6 +35,7 @@
 
 namespace Tollwerk\TwPlaces\Controller;
 
+use Tollwerk\TwBase\Domain\Repository\CountryRepository;
 use Tollwerk\TwGeo\Utility\GeoUtility;
 use Tollwerk\TwPlaces\Domain\Repository\PlaceRepository;
 use Tollwerk\TwPlaces\Utility\SearchFormUtility;
@@ -61,9 +62,9 @@ class PlaceController extends ActionController
 
     /**
      * PlaceController constructor.
-     *
      * @param SearchFormUtility $searchFormUtility
      * @param PlaceRepository $placeRepository
+     * @param GeoUtility $geoUtility
      */
     public function __construct(SearchFormUtility $searchFormUtility, PlaceRepository $placeRepository, GeoUtility $geoUtility)
     {
@@ -73,45 +74,35 @@ class PlaceController extends ActionController
     }
 
     /**
-     * Processes the submitted list form values
-     * and passes everything on to listAction
-     *
-     * @param array $placeSearchForm
+     * @param array $placeListForm
      */
-    public function listFormAction(array $placeListForm = [])
+    public function listAction(array $placeListForm = []): void
     {
-        $filters = [];
+        $constraints= $this->searchFormUtility->getConstraintsFromSearchForm($placeListForm);
 
-        if (!empty($placeListForm['country'])) {
-            $filters['country'] = $placeListForm['country'];
+        if(empty($constraints['country'])) {
+            // Try to get the users position
+            // so we can preselect the right country
+            $position = $this->geoUtility->getGeoLocation();
+            if($position) {
+                $country = $this->objectManager->get(CountryRepository::class)->findOneByCnIso_2(strtolower($position->getCountryCode()));
+                if($country) {
+                    $constraints['country'] = $country->getUid();
+                }
+            }
         }
 
-        $this->forward('list', 'Place', 'TwPlaces', [
-            'filters' => $filters,
-        ]);
-    }
-
-    /**
-     * List places
-     *
-     * @param array $filters Array with filters
-     */
-    public function listAction(array $filters = []): void
-    {
-        $position = $this->geoUtility->getGeoLocation();
-
-        $places = !empty($filters) ? $this->placeRepository->search(
+        $places = $this->placeRepository->search(
             $position ? $position->getLatitude() : null,
             $position ? $position->getLongitude() : null,
-            $filters
-        ) : [];
+            $constraints
+        );
         $this->view->assign('places', $places);
     }
 
     /**
-     * Search places nearby a desired location
-     *
      * @param array $placeSearchForm
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public function searchAction(array $placeSearchForm = []): void
     {
@@ -132,9 +123,7 @@ class PlaceController extends ActionController
     }
 
     /**
-     * Show a single place
-     *
-     * @param int $place A single place uid
+     * @param int $place
      */
     public function showAction(int $place)
     {

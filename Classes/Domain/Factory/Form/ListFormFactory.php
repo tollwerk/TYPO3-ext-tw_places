@@ -4,8 +4,12 @@
 namespace Tollwerk\TwPlaces\Domain\Factory\Form;
 
 
+use function GuzzleHttp\Psr7\str;
+use SJBR\StaticInfoTables\Domain\Model\Country;
+use SJBR\StaticInfoTables\Domain\Repository\CountryRepository;
 use Tollwerk\TwBase\Domain\Model\UnsubmittableFormDefinition;
 use Tollwerk\TwGeo\Domain\Model\FormElements\Geoselect;
+use Tollwerk\TwGeo\Utility\GeoUtility;
 use Tollwerk\TwPlaces\Utility\FilterUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
@@ -84,7 +88,7 @@ class ListFormFactory extends AbstractFormFactory
             $prototypeConfiguration
         );
         $this->form->setRenderingOption('honeypot', ['enable' => false]);
-        $this->form->setRenderingOption('controllerAction', 'listForm');
+        $this->form->setRenderingOption('controllerAction', 'list');
 
 
 
@@ -97,6 +101,18 @@ class ListFormFactory extends AbstractFormFactory
         $countryField = $page->createElement('country', 'SingleSelect');
         $countryField->setProperty('options', $filterUtility->getOptionsForCountry());
         $countryField->setProperty('theme', $configuration['theme']);
+
+        // Try to preselect the right country
+        /** @var GeoUtility $geoUtility */
+        $geoUtility = GeneralUtility::makeInstance(GeoUtility::class);
+        $position = $geoUtility->getGeoLocation();
+        if($position) {
+            /** @var Country $country */
+            $country = $this->objectManager->get(CountryRepository::class)->findOneByCnIso_2(strtolower($position->getCountryCode()));
+            if($country) {
+                $countryField->setDefaultValue($country->getUid());
+            }
+        }
 
         $this->triggerFormBuildingFinished($this->form);
         return $this->form;

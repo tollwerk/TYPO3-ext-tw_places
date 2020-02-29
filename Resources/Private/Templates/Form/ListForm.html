@@ -12,14 +12,34 @@
             additionalParams="{form.renderingOptions.additionalParams}"
     >
         <f:render partial="{form.currentPage.templateName}" arguments="{page: form.currentPage}" />
-        <base:cta value="{form.pages -> f:count()}" type="{f:if(condition: '{type}', then: '{type}')}" cta-type="{f:if(condition: '{ctaType}', then: '{ctaType}', else: 'button')}" cta-theme="{f:if(condition: '{theme}',then: '{theme}', else: 'default')}" class="CallToAction__submit">
-                                    <span class="Form__submit-label">
-                                      {formvh:translateElementProperty(element: form, renderingOptionProperty: 'submitButtonLabel')}
-                                    </span>
+
+
+        <f:switch expression="{form.renderingOptions.theme}">
+            <f:case value="inverted">
+                <f:variable name="buttonTheme" value="CallToAction--theme-default"/>
+                <f:variable name="buttonStyle" value="CallToAction--opaque" />
+                <f:variable name="buttonInverted" value="CallToAction--inverted" />
+            </f:case>
+            <f:defaultCase>
+                <f:variable name="buttonTheme" value="CallToAction--theme-default"/>
+                <f:variable name="buttonStyle" value="CallToAction--opaque" />
+                <f:variable name="buttonInverted" value="" />
+            </f:defaultCase>
+        </f:switch>
+
+        <f:form.button
+                property="__currentPage"
+                value="{form.pages -> f:count()}"
+                class="CallToAction {buttonStyle} {buttonTheme} {buttonInverted} CallToAction__submit">
+                            <span class="Form__submit-label">
+                              {formvh:translateElementProperty(element: form, renderingOptionProperty: 'submitButtonLabel')}
+                            </span>
             <f:if condition="{form.formDefinition.renderingOptions.submitButtonIconRight}">
                 <base:icon.use icon="{form.formDefinition.renderingOptions.submitButtonIconRight}"/>
             </f:if>
-        </base:cta>
+
+        </f:form.button>
+
     </formvh:form>
 </formvh:renderRenderable>
 </html>

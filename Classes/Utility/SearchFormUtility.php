@@ -52,6 +52,17 @@ class SearchFormUtility implements SingletonInterface
     protected $objectManager = null;
 
     /**
+     * List of simple properties which can
+     * be passed as constraints to PlaceRepository->search()
+     * withouth further processing
+     *
+     * @var array
+     */
+    protected $simpleConstraints = [
+        'country' => true,
+    ];
+
+    /**
      * SearchFormUtility constructor.
      * @param ObjectManager $objectManager
      */
@@ -100,8 +111,13 @@ class SearchFormUtility implements SingletonInterface
      */
     public function getConstraintsFromSearchForm(array $search): array
     {
-        // TODO: Implement
-        return $search;
+        $constraints = [];
+        foreach($search as $property => $value) {
+            if(array_key_exists($property, $this->simpleConstraints)) {
+                $constraints[$property] = $value;
+            }
+        }
+        return $constraints;
     }
 
 }
