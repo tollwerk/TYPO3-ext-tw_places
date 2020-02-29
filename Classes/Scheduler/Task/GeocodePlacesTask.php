@@ -104,7 +104,7 @@ class GeocodePlacesTask extends AbstractTask
             ->set('place.latitude', $latitude)
             ->set('place.longitude', $longitude)
             ->set('place.tstamp', time())
-            ->set('place.geocoded', 1)
+            ->set('place.geocoded', ($latitude && $longitude) ? 1 : 0)
             ->execute();;
     }
 

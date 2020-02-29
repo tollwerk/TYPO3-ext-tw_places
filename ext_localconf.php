@@ -46,8 +46,8 @@ call_user_func(
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'TwPlaces',
             'Search',
-            [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'searchForm, search, show'],
-            [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'searchForm, search']
+            [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'search, show'],
+            [\Tollwerk\TwPlaces\Controller\PlaceController::class => 'search']
         );
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'TwPlaces',

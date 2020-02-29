@@ -82,7 +82,7 @@ class PlaceController extends ActionController
     {
         $filters = [];
 
-        if(!empty($placeListForm['country'])) {
+        if (!empty($placeListForm['country'])) {
             $filters['country'] = $placeListForm['country'];
         }
 
@@ -109,40 +109,25 @@ class PlaceController extends ActionController
     }
 
     /**
-     * Processes the submitted search form values
-     * and passes everything on to searchAction
+     * Search places nearby a desired location
      *
      * @param array $placeSearchForm
      */
-    public function searchFormAction(array $placeSearchForm = [])
+    public function searchAction(array $placeSearchForm = []): void
     {
+        // Get values from $placeSearchForm
         $position = $this->searchFormUtility->getCoordinatesFromSearchForm($placeSearchForm);
-        $this->forward('search', 'Place', 'TwPlaces', [
-            'latitude' => $position ? $position->getLatitude() : null,
-            'longitude' => $position ? $position->getLongitude() : null,
-            'constraints' => $this->searchFormUtility->getConstraintsFromSearchForm($placeSearchForm),
-            'searchTerm' => !empty($placeSearchForm['geoselect-search']) ? $placeSearchForm['geoselect-search'] : null,
-        ]);
-    }
-
-    /**
-     * Search places nearby a desired location
-     *
-     * @param float $latitude The latitude
-     * @param float $longitude The longitude
-     * @param array $constraints Constraints for the search results like distance, categories etc.
-     * @param string|null $searchTerm The last search term
-     */
-    public function searchAction(float $latitude = null, float $longitude = null, array $constraints = [], string $searchTerm = null): void
-    {
+        $latitude = $position ? $position->getLatitude() : null;
+        $longitude = $position ? $position->getLongitude() : null;
+        $constraints = $this->searchFormUtility->getConstraintsFromSearchForm($placeSearchForm);
+        $searchTerm = !empty($placeSearchForm['geoselect-search']) ? $placeSearchForm['geoselect-search'] : null;
         $this->view->assign('searchTerm', $searchTerm);
+
+        // Set default constraints. TODO: Get from configuration / placeSearchForm
         $constraints['limit'] = 3;
 
         // Get places
-        $places = [];
-        if ($searchTerm) {
-            $places = $this->placeRepository->search($latitude, $longitude, $constraints);
-        }
+        $places = $searchTerm ? $this->placeRepository->search($latitude, $longitude, $constraints) : [];
         $this->view->assign('places', $places);
     }
 

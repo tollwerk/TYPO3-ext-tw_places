@@ -83,7 +83,7 @@ class SearchFormFactory extends AbstractFormFactory
             $prototypeConfiguration
         );
         $this->form->setRenderingOption('honeypot', ['enable' => false]);
-        $this->form->setRenderingOption('controllerAction', 'searchForm');
+        $this->form->setRenderingOption('controllerAction', 'search');
 
 
 
