@@ -84,7 +84,7 @@ class SearchFormFactory extends AbstractFormFactory
         );
         $this->form->setRenderingOption('honeypot', ['enable' => false]);
         $this->form->setRenderingOption('controllerAction', 'search');
-
+        $this->form->setRenderingOption('section', 'Places');
 
 
         // Create form page and fields
@@ -94,6 +94,9 @@ class SearchFormFactory extends AbstractFormFactory
         $geoselectField = $page->createElement('geoselect', 'Geoselect');
         $geoselectField->setProperty('searchTerm', $configuration['searchTerm']);
         $geoselectField->getSearchField()->setProperty('theme', $configuration['theme']);
+        $geoselectField->getSearchField()->setProperty('fluidAdditionalAttributes', [
+            'autocomplete' => 'off'
+        ]);
 
 
         $this->triggerFormBuildingFinished($this->form);
