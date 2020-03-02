@@ -106,6 +106,8 @@ class PlaceController extends ActionController
      */
     public function searchAction(array $placeSearchForm = []): void
     {
+        $this->view->assign('placeSearchForm', $placeSearchForm);
+
         // Get values from $placeSearchForm
         $position = $this->searchFormUtility->getCoordinatesFromSearchForm($placeSearchForm);
         $latitude = $position ? $position->getLatitude() : null;
@@ -115,7 +117,7 @@ class PlaceController extends ActionController
         $this->view->assign('searchTerm', $searchTerm);
 
         // Set default constraints. TODO: Get from configuration / placeSearchForm
-        $constraints['limit'] = 3;
+//        $constraints['limit'] = 3;
 
         // Get places
         $places = $searchTerm ? $this->placeRepository->search($latitude, $longitude, $constraints) : [];
