@@ -122,8 +122,9 @@ class PlaceRepository extends Repository
             ->where($concreteQueryBuilder->expr()->eq('place.deleted', 0))
             ->andWhere($concreteQueryBuilder->expr()->eq('place.hidden', 0))
             ->groupBy('uid')
-            ->orderBy('geocoded', 'DESC')
-            ->addOrderBy('distance', 'ASC');
+            ->addOrderBy('distance', 'ASC')
+            ->addOrderBy('country', 'ASC')
+            ->addOrderBy('postal_code', 'ASC');
 
         // Set simple filters with IN (...) constraints
         foreach ($this->simpleFilterProperties as $property) {
