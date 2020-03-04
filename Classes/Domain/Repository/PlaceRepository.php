@@ -83,6 +83,7 @@ class PlaceRepository extends Repository
      * @param float|null $latitude
      * @param float|null $longitude
      * @param array $constraints
+     *
      * @return mixed[]
      */
     public function search(float $latitude = null, float $longitude = null, array $constraints = [])
@@ -126,6 +127,12 @@ class PlaceRepository extends Repository
             ->addOrderBy('country', 'ASC')
             ->addOrderBy('postal_code', 'ASC');
 
+        if (!empty($constraints['excludePlacesWithoutCoordinates'])) {
+            $concreteQueryBuilder->andWhere($concreteQueryBuilder->expr()->isNotNull('place.latitude'))
+                ->andWhere($concreteQueryBuilder->expr()->isNotNull('place.longitude'))
+                ->andWhere($concreteQueryBuilder->expr()->eq('place.geocoded', 1));
+        }
+
         // Set simple filters with IN (...) constraints
         foreach ($this->simpleFilterProperties as $property) {
             if (!empty($constraints[$property])) {
@@ -133,7 +140,7 @@ class PlaceRepository extends Repository
             }
         }
 
-        if(!empty($constraints['limit'])) {
+        if (!empty($constraints['limit'])) {
             $concreteQueryBuilder->setMaxResults(intval($constraints['limit']));
         }
 

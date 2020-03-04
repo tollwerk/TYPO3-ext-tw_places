@@ -113,6 +113,7 @@ class PlaceController extends ActionController
         $latitude = $position ? $position->getLatitude() : null;
         $longitude = $position ? $position->getLongitude() : null;
         $constraints = $this->searchFormUtility->getConstraintsFromSearchForm($placeSearchForm);
+        $constraints['excludePlacesWithoutCoordinates'] = true;
         $searchTerm = !empty($placeSearchForm['geoselect-search']) ? $placeSearchForm['geoselect-search'] : null;
         $this->view->assign('searchTerm', $searchTerm);
 
